@@ -25,17 +25,35 @@ namespace TP_ListeChaineeGenerique
             elem.Content = 4;
             list.Add(elem);
 
-            elem = new Element<int> { setPrecedent = null, setSuivant = null };
-            elem.Content = -45;
-            list.AddAt(3, elem);
+            Element<int> tmp = list.Start;
+            int index = 0;
+            Console.WriteLine("***************");
+            while (tmp != null)
+            {
+                Console.WriteLine(tmp.Content + ", index = " + tmp.index);
+                tmp = list.Index(++index);
+            }
 
-            Element<int> tmp = list.Start();
+            elem = new Element<int> { setPrecedent = null, setSuivant = null };
+            elem.Content = 99;
+            list.AddAt(0, elem);
+
+            elem = new Element<int> { setPrecedent = null, setSuivant = null };
+            elem.Content = 33;
+            list.AddAt(2, elem);
+
+            elem = new Element<int> { setPrecedent = null, setSuivant = null };
+            elem.Content = 30;
+            list.AddAt(2, elem);
+
+            tmp = list.Start;
+            Console.WriteLine("***************");
             while (tmp != null)
             {
                 Console.WriteLine(tmp.Content + ", index = " + tmp.index);
                 tmp = tmp.Suivant;
             }
-
+            Console.WriteLine();
             Console.ReadKey();
         }
 
@@ -58,11 +76,11 @@ namespace TP_ListeChaineeGenerique
         {
             public static int i = 0;
 
-            public static Element<E> _ancre;
+            private static Element<E> _ancre;
 
             public void Add(Element<E> elem)
             {
-                Element<E> tmp = End(_ancre);
+                Element<E> tmp = End;
 
                 if (_ancre != null)
                 {
@@ -81,10 +99,10 @@ namespace TP_ListeChaineeGenerique
 
             public void AddAt(int index, Element<E> elem)
             {
-                if (index == i)
+                if (index >= i)
                 {
                     Add(elem);
-                    return ;
+                    return;
                 }
 
                 Element<E> tmp = Index(index);
@@ -124,13 +142,15 @@ namespace TP_ListeChaineeGenerique
                 return elem;
             }
 
-            public Element<E> Start()
+            public Element<E> setStart()
             {
                 return _ancre;
             }
 
-            public Element<E> End(Element<E> elem)
+            public Element<E> setEnd()
             {
+                Element<E> elem = _ancre;
+
                 if (elem != null)
                 {
                     while (elem.Suivant != null)
@@ -138,6 +158,10 @@ namespace TP_ListeChaineeGenerique
                 }
                 return elem;
             }
+
+            public Element<E> Start { get { return setStart(); } }
+
+            public Element<E> End { get { return setEnd(); } }
         }
     }
 }
